@@ -1,0 +1,23 @@
+envs:
+  - pyenv
+  - rbenv
+  - jenv
+  - ndenv
+  # - goenv
+anyenv_install_path: ~/.anyenv
+python_versions:
+  - "2.7.13"
+  - "3.6.2"
+java_versions:
+  - "9"
+  - "1.8"
+ruby_versions:
+  - "2.2.8"
+  - "2.3.5"
+  - "2.4.2"
+node_versions:
+  - "8.9.4"
+  - "9.4.0"
+go_versions:
+  # - "1.8"
+  - "1.9.3"

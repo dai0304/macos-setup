@@ -1,0 +1,312 @@
+---
+# file: roles/system_preferences/tasks/main.yml
+
+###############################################################################
+# Desktop & Screen Saver                                                      #
+###############################################################################
+
+- name: Enable Screen Saver and Start after 5 Minutes
+  osx_defaults:
+    host: currentHost
+    domain: com.apple.screensaver
+    key: idleTime
+    type: int
+    value: 300
+
+###############################################################################
+# Security & Privacy                                                          #
+###############################################################################
+
+- name: Require password after sleep or screen saver begins
+  osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPassword
+    type: int
+    value: 1
+    state: present
+
+- name: Password grace period of 5 seconds
+  osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPasswordDelay
+    type: float
+    value: 5
+    state: present
+
+- name: Turn on application level firewall and block all incoming connections
+  osx_defaults:
+    domain: /Library/Preferences/com.apple.alf
+    key: globalstate
+    type: int
+    value: 2
+    state: present
+  become: true
+
+- name: Check if administrator password is required to access system-wide preferences
+  shell: |
+    /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
+    /usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist
+  register: shared
+  changed_when: false
+
+- name: Require an administrator password to access system-wide preferences
+  shell: |
+    /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
+    /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
+    rm /tmp/system.preferences.plist
+  become: true
+  when: shared.stdout != "false"
+
+###############################################################################
+# Energy Saver                                                                #
+###############################################################################
+
+- name: Show battery percentage
+  osx_defaults:
+    domain: com.apple.menuextra.battery
+    key: ShowPercent
+    type: string
+    value: YES
+    state: present
+  when: '"MacBookPro" in ansible_model'
+
+###############################################################################
+# Sound                                                                       #
+###############################################################################
+
+- name: Disable the sound effects on boot
+  command: /usr/sbin/nvram SystemAudioVolume=" "
+  become: true
+
+###############################################################################
+# Finder                                                                      #
+###############################################################################
+
+# - name: Set nohidden
+#   command: chflags nohidden {{ item }}
+#   become: true
+#   with_items:
+#    - /usr
+#    - /opt
+
+- name: Delete localized files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /Applications/.localized
+    - /Applications/Utilities/.localized
+    - /Library/.localized
+    - /Library/Compositions/.localized
+    - /private/var/root/Library/.localized
+    #- /System/.localized
+    #- /System/Library/.localized
+    #- /System/Library/Compositions/.localized
+    - /Users/.localized
+    - /Users/{{ ansible_user_id }}/Desktop/.localized
+    - /Users/{{ ansible_user_id }}/Documents/.localized
+    - /Users/{{ ansible_user_id }}/Downloads/.localized
+    - /Users/{{ ansible_user_id }}/Library/.localized
+    - /Users/{{ ansible_user_id }}/Library/Compositions/.localized
+    - /Users/{{ ansible_user_id }}/Library/Favorites/.localized
+    - /Users/{{ ansible_user_id }}/Library/Input Methods/.localized
+    - /Users/{{ ansible_user_id }}/Movies/.localized
+    - /Users/{{ ansible_user_id }}/Music/.localized
+    - /Users/{{ ansible_user_id }}/Pictures/.localized
+    - /Users/{{ ansible_user_id }}/Public/.localized
+    - /Users/{{ ansible_user_id }}/Public/Drop Box/.localized
+    - /Users/Guest/Desktop/.localized
+    - /Users/Guest/Documents/.localized
+    - /Users/Guest/Downloads/.localized
+    - /Users/Guest/Library/.localized
+    - /Users/Guest/Library/Compositions/.localized
+    - /Users/Guest/Library/Favorites/.localized
+    - /Users/Guest/Library/Input Methods/.localized
+    - /Users/Guest/Movies/.localized
+    - /Users/Guest/Music/.localized
+    - /Users/Guest/Pictures/.localized
+    - /Users/Guest/Public/.localized
+    - /Users/Guest/Public/Drop Box/.localized
+    - /Users/Shared/.localized
+  become: true
+
+- name: "Finder: show extensions"
+  osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: "Finder: show status bar"
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: "Finder: show path bar, ql selection, full path title, no extension change warnings"
+  osx_defaults:
+    domain: com.apple.finder
+    key: "{{ item.key }}"
+    type: bool
+    value: "{{ item.value }}"
+  with_items:
+    - { key: ShowPathbar, value: true }
+    - { key: QLEnableTextSelection, value: true }
+    - { key: _FXShowPosixPathInTitle, value: true }
+    - { key: FXEnableExtensionChangeWarning, value: false }
+  notify: Restart Finder
+
+- name: "Finder: Set `${HOME}` as the default location for new windows"
+  osx_defaults:
+    domain: com.apple.finder
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: NewWindowTarget, value: PfHm }
+    - { key: NewWindowTargetPath, value: "file://${HOME}/" }
+  notify: Restart Finder
+
+- name: "Finder: show in column style"
+  osx_defaults:
+    domain: com.apple.finder
+    key: FXPreferredViewStyle
+    value: clmv
+  notify: Restart Finder
+
+# defaults write com.apple.finder ShowRecentTags -bool false
+# defaults write com.apple.finder SidebarDevicesSectionDisclosedState -bool true
+# defaults write com.apple.finder SidebarPlacesSectionDisclosedState -bool true
+# defaults write com.apple.finder SidebarSharedSectionDisclosedState -bool true
+
+
+###############################################################################
+# Screenshot                                                                  #
+###############################################################################
+
+- name: "Screenshot: change filename"
+  osx_defaults:
+    domain: com.apple.screencapture
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: name, value: screenshot }
+    - { key: location, value: "~/Dropbox/Private/screenshots" }
+
+###############################################################################
+# Dock                                                                        #
+###############################################################################
+
+- name: "Dock: Wipe all app icons from the Dock"
+  osx_defaults:
+    domain: com.apple.dock
+    key: persistent-apps
+    type: array
+    value: []
+  notify: Restart Dock
+
+- name: "Dock: Autohide, Mineffect"
+  osx_defaults:
+    domain: com.apple.dock
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: autohide, type: bool, value: true }
+    - { key: mineffect, type: string, value: suck }
+  notify: Restart Dock
+
+- name: "Dock: Hot corners"
+  osx_defaults:
+    domain: com.apple.dock
+    key: "{{ item.key }}"
+    type: int
+    value: "{{ item.value }}"
+  with_items:
+    - { key: wvous-tl-corner,   value: 5 }
+    - { key: wvous-tl-modifier, value: 0 }
+    - { key: wvous-tr-corner,   value: 6 }
+    - { key: wvous-tr-modifier, value: 0 }
+    - { key: wvous-bl-corner,   value: 2 }
+    - { key: wvous-bl-modifier, value: 0 }
+    - { key: wvous-br-corner,   value: 10 }
+    - { key: wvous-br-modifier, value: 0 }
+    # Possible values:
+    #  0: no-op
+    #  2: Mission Control
+    #  3: Show application windows
+    #  4: Desktop
+    #  5: Start screen saver
+    #  6: Disable screen saver
+    #  7: Dashboard
+    # 10: Put display to sleep
+    # 11: Launchpad
+    # 12: Notification Center
+  notify: Restart Dock
+
+###############################################################################
+# Trackpad                                                                    #
+###############################################################################
+
+- name: "Trackpad: Enable click by tap 1"
+  osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: Clicking
+    type: int
+    value: 1
+
+- name: "Trackpad: swipe 1"
+  osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch
+    key: TrackpadThreeFingerHorizSwipeGesture
+    type: int
+    value: 1
+
+- name: "Trackpad: swipe 2"
+  osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: TrackpadThreeFingerHorizSwipeGesture
+    type: int
+    value: 1
+
+- name: "Trackpad: Enable click by tap 2"
+  osx_defaults:
+    domain: NSGlobalDomain
+    key: com.apple.mouse.tapBehavior
+    type: int
+    value: 1
+
+- name: "Trackpad: Enable click by tap 2"
+  osx_defaults:
+    domain: NSGlobalDomain
+    key: com.apple.mouse.tapBehavior
+    type: int
+    value: 1
+
+- name: "Trackpad: Enable click by tap 3"
+  osx_defaults:
+    host: currentHost
+    domain: NSGlobalDomain
+    key: com.apple.mouse.tapBehavior
+    type: int
+    value: 1
+
+###############################################################################
+# Others                                                                      #
+###############################################################################
+
+- name: "Avoid to create .DS_Store in network store"
+  osx_defaults:
+    domain: com.apple.desktopservices
+    key: DSDontWriteNetworkStores
+    type: bool
+    value: true
+
+- name: "Show battery percent"
+  osx_defaults:
+    domain: com.apple.menuextra.battery
+    key: ShowPercent
+    type: string
+    value: "YES"

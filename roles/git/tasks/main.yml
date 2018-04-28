@@ -1,0 +1,42 @@
+---
+# file: roles/github/tasks/main.yml
+
+- name: Install git
+  homebrew:
+    name: git
+    state: present
+
+- name: Set name in global git configuration
+  git_config:
+    name: user.name
+    scope: global
+    value: Daisuke Miyamoto
+
+- name: Set email in global git configuration
+  git_config:
+    name: user.email
+    scope: global
+    value: "dai.0304@gmail.com"
+
+- name: Set page in global git configuration
+  git_config:
+    name: core.pager
+    scope: global
+    value: less -r
+
+- name: Ensure .config/git directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.config/git"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: staff
+    mode: 0755
+
+- name: Install ignore in global git configuration
+  copy:
+    src: ignore
+    dest: "{{ ansible_user_dir }}/.config/git/ignore"
+    owner: "{{ ansible_user_id }}"
+    group: staff
+    mode: 0644
+

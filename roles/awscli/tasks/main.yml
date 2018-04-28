@@ -1,0 +1,16 @@
+---
+# file: roles/awscli/tasks/main.yml
+
+- name: Install AWS CLI
+  homebrew:
+    name: awscli
+    state: present
+
+- name: Ensure {{ ansible_user_dir }}/.aws directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.aws"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: staff
+    mode: 0755
+

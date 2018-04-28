@@ -1,0 +1,10 @@
+---
+
+- name: Provision 'base' macOS applications
+  hosts: localhost
+
+  roles:
+    - { role: system_preferences, tags: system_preferences }
+    - { role: zsh, tags: zsh }
+
+- import_playbook: tasks/install-base.yml

@@ -1,0 +1,5 @@
+---
+# Top level playbook to automate configuration of macOS-based machine
+
+- import_playbook: base.yml
+- import_playbook: development.yml

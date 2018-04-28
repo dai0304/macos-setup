@@ -1,0 +1,13 @@
+---
+
+- name: Provision macOS applications used for development
+  hosts: localhost
+
+  roles:
+    - { role: ssh, tags: ssh }
+    - { role: git, tags: git }
+    #- { role: visual_studio_code, tags: visual_studio_code }
+    - { role: awscli, tags: awscli }
+    - { role: anyenv, tags: anyenv }
+
+- import_playbook: tasks/install-development.yml

@@ -1,0 +1,40 @@
+---
+
+- hosts: localhost
+  tasks:
+  - name: Update homebrew itself first
+    homebrew: update_homebrew=yes
+
+  - name: Tap homebrew repositories
+    homebrew_tap: name={{ item }}
+    with_items:
+      # - homebrew/dupes
+      # - homebrew/binary
+      - sanemat/font
+      - classmethod/repos
+ 
+  - name: Install homebrew packages
+    homebrew: name={{ item }}
+    with_items:
+      - tree
+      - wget
+      - colordiff
+      - coreutils # for gdate
+      - jq
+      - pt
+      - git-flow
+      - git-secrets
+      - mysql
+      - nkf
+      - ricty
+      - watch
+      - aurl
+      - rcmdnk/rcmdnkpac/parse-plist
+
+  - name: Install Homebrew cask packages
+    homebrew_cask: name={{ item }}
+    with_items:
+      - iterm2
+      # - virtualbox
+      - docker
+      - mysqlworkbench
