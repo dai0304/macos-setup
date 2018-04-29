@@ -103,6 +103,7 @@
     #- /System/Library/.localized
     #- /System/Library/Compositions/.localized
     - /Users/.localized
+    - /Users/{{ ansible_user_id }}/Applications/.localized
     - /Users/{{ ansible_user_id }}/Desktop/.localized
     - /Users/{{ ansible_user_id }}/Documents/.localized
     - /Users/{{ ansible_user_id }}/Downloads/.localized
@@ -169,11 +170,11 @@
     - { key: NewWindowTargetPath, value: "file://${HOME}/" }
   notify: Restart Finder
 
-- name: "Finder: show in column style"
+- name: "Finder: open in list view style"
   osx_defaults:
     domain: com.apple.finder
     key: FXPreferredViewStyle
-    value: clmv
+    value: Nlsv
   notify: Restart Finder
 
 # defaults write com.apple.finder ShowRecentTags -bool false

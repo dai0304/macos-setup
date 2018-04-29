@@ -12,23 +12,33 @@
       # - homebrew/binary
       - sanemat/font
       - classmethod/repos
+
+  - name: Remove homebrew packages
+    homebrew: name={{ item }} state=absent
+    with_items:
+      - git-flow
  
   - name: Install homebrew packages
     homebrew: name={{ item }}
     with_items:
       - tree
       - wget
+      - watch
       - colordiff
       - coreutils # for gdate
       - jq
       - pt
-      - git-flow
+      - git-flow-avh
       - git-secrets
+      - hub
       - mysql
       - nkf
       - ricty
       - watch
       - aurl
+      - base64
+      - giter8
+      - httpie
       - rcmdnk/rcmdnkpac/parse-plist
 
   - name: Install Homebrew cask packages
@@ -38,3 +48,4 @@
       # - virtualbox
       - docker
       - mysqlworkbench
+      # - intellij-idea

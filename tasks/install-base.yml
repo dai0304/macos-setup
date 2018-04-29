@@ -11,8 +11,8 @@
       - google-chrome
       - google-japanese-ime
       - firefox
-      - adobe-reader
-      - clipy
+      - adobe-acrobat-reader
+      # - clipy
       - macdown
       # - bitbar
       # - karabiner
@@ -27,9 +27,14 @@
       # - 1password
       - sublime-text
       - omnifocus
-      - omnigraffle
+      - caskroom/versions/omnigraffle6
       - qlmarkdown
       - qlvideo
+      - qlstephen
+      - qlgradle
+      - qlprettypatch
+      - quicklook-csv
+      - quicklook-json
 
 # [Mac App Store]
 # - LINE

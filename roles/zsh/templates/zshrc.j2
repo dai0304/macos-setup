@@ -1,9 +1,9 @@
 export PATH="/usr/local/bin:$PATH"
 
-source /usr/local/share/antigen/antigen.zsh
+source $(brew --prefix)/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
-antigen-lib
+# antigen-lib
 
 
 export REPORTTIME=3
@@ -25,6 +25,11 @@ if [ -f ~/.homebrew_github_api_token ];then
   source ~/.homebrew_github_api_token
 fi
 
+# ==== anyenv
+export PATH="${HOME}/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+
+# ==== Aliases
 alias rm='rm -i'
 alias ll='ls -lGF'
 alias ls='ls -FhG'
@@ -35,6 +40,7 @@ alias date='gdate'
 # Git
 alias g='git'
 alias gst='git status'
+alias ga='git add'
 alias gc='git commit'
 alias gl='git pull'
 alias gp='git push'

@@ -8,4 +8,42 @@
 
 https://support.apple.com/ja-jp/HT204012
 
+## Run ansible playbook
 
+```
+$ xcode-select --install
+$ git clone https://github.com/dai0304/macos-setup.git
+$ cd macos-setup
+$ ./setup
+$ ansible-playbook -K site.yml
+```
+
+## Install via Apple App Store
+
+* 1passowrd
+* Numbers
+* Pages
+* Keynote
+* Microsoft Remote Desktop 8.0
+* LINE
+* ESET https://eset-info.canon-its.jp/support/versionup/ecsp.html
+
+## Login / setup application
+
+* Alfred <- license
+* Clipy <- boot
+* Sublime text <- license
+* iTerm2 <- install shell integration
+* Google Chrome (as default browser, login)
+* Dropbox (login, sync)
+* 1Password (configure)
+* Chatwork (login)
+* OmniFocus (login, sync)
+* OmniGraffle <- license
+
+## Manual setup
+
+* Keyboard
+    * disable Spotlight keyboard shortcut: Cmd+SP
+    * disable IME keyboard shortcut: Ctrl+SP, Ctrl+Opt+SP
+    * add Input Method: Google x4

@@ -3,10 +3,10 @@
     repo: "{{ anyenv_git_url }}"
     dest: "{{ anyenv_install_path }}"
 
-- name: Configure anyenv
-  template:
-    src: anyenv.rc.j2
-    dest: "{{ zsh_custom_dir }}/anyenv.zsh"
+# - name: Configure anyenv
+#   template:
+#     src: anyenv.rc.j2
+#     dest: "{{ zsh_custom_dir }}/anyenv.zsh"
 
 # - name: Create envs direcrory
 #   file:
@@ -39,6 +39,6 @@
 
 - include_tasks: java.yml
 # - include_tasks: go.yml
-# - include_tasks: python.yml
-# - include_tasks: node.yml
-# - include_tasks: ruby.yml
+- include_tasks: python.yml
+- include_tasks: node.yml
+- include_tasks: ruby.yml
