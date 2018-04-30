@@ -2,17 +2,17 @@
 # file: roles/zsh/tasks/main.yml
 
 - name: Install zsh
-  homebrew:
-    name: zsh
-    state: present
+  homebrew: name={{ item }}
+  with_items:
+    - zsh
+    - zsh-completions
 
 - name: Search path of zsh
-  command: >
-    which zsh
+  command: which zsh
   register: which_zsh
   ignore_errors: True
 
-- debug: msg="{{which_zsh.stdout}}"
+- debug: msg="{{ which_zsh.stdout }}"
 
 #
 # login shell settings, you will be ased user's password when system switches to zsh.
@@ -20,16 +20,16 @@
 
 - name: Grep shells
   shell: >
-    grep "^{{which_zsh.stdout}}$" /etc/shells
+    grep "^{{ which_zsh.stdout }}$" /etc/shells
   register: grep_shells 
   ignore_errors: True
 
-- debug: msg="{{grep_shells}}"
+- debug: msg="{{ grep_shells }}"
   when: grep_shells.rc == 0
 
 - name: Append shells
   shell: >
-    echo {{which_zsh.stdout}} >> /etc/shells
+    echo {{ which_zsh.stdout }} >> /etc/shells
   become: true
   when: grep_shells.rc != 0
 
@@ -39,13 +39,9 @@
   register: osx_login_shell_current_login_shell
   changed_when: false
 
-- name: Notify please input password
-  shell: >
-    osascript -e 'display notification "Prease input password in terminal" with title "osx-provisioning"'
-  when: osx_login_shell_current_login_shell.stdout != osx_login_shell_shell
 - name: Change login shell
   shell: >
-    chpass -s {{which_zsh.stdout}}
+    chpass -s {{ which_zsh.stdout }}
   when: osx_login_shell_current_login_shell.stdout != osx_login_shell_shell
   register: result
   until: result.rc == 0
@@ -56,45 +52,63 @@
 #
 
 - name: Install antigen
-  homebrew:
-    name: antigen
-    state: present
-
-- name: Deploy zshrc
-  template: src=zshrc.j2 dest=~/.zshrc force=True
+  homebrew: name=antigen
 
 - name: Install prezto through antigen
   shell: >
-    source ~/.zshrc && antigen bundle sorin-ionescu/prezto
+    source $(brew --prefix)/share/antigen/antigen.zsh && antigen bundle sorin-ionescu/prezto
     executable={{which_zsh.stdout}}
 #   ignore_errors: True
 
 - name: Create symlink for prezto
   file:
-    src: ~/.antigen/bundles/sorin-ionescu/prezto
-    dest: ~/.zprezto
+    src: "{{ ansible_user_dir }}/.antigen/bundles/sorin-ionescu/prezto"
+    dest: "{{ ansible_user_dir }}/.zprezto"
     state: link
-
-- name: Remove evacuated .zshrc
-  file:
-    path: /tmp/.zshrc
-    state: absent
-
-- name: Evacuate .zshrc 
-  command: mv ~/.zshrc /tmp/.zshrc
 
 - name: Apply prezto setting
   shell: >
     setopt EXTENDED_GLOB; for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do; ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"; done;
-    executable={{which_zsh.stdout}}
-
-- name: Append evacuated settings
-  shell: >
-    cat /tmp/.zshrc >> ~/.zshrc
+    executable={{ which_zsh.stdout }}
+  ignore_errors: True
 
 - name: Get path of original preztorc 
-  command: readlink ~/.zpreztorc
+  command: readlink {{ ansible_user_dir }}/.zpreztorc
   register: zpreztorc_path
 
 - name: Deploy preztorc_template
-  template: src=zpreztorc.j2 dest={{zpreztorc_path.stdout}} force=True
+  template: src=zpreztorc.j2 dest={{ zpreztorc_path.stdout }} force=True
+
+#
+# install zshrc
+#
+
+- name: Ensure {{ ansible_user_dir }}/.zsh.d directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.zsh.d"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: staff
+    mode: 0700
+
+- name: Update zshrc for {{ ansible_user_dir }}/.zsh.d
+  lineinfile:
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    line: for file in ~/.zsh.d/*; do source "$file"; done
+
+- name: Deploy {{ ansible_user_dir }}/zsh.d
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ ansible_user_dir }}/.zsh.d/{{ item }}"
+    force: True
+  with_items:
+    - zsh
+    - env
+    - terminal
+    - prompt
+    - homebrew
+    - antigen
+    - anyenv
+    - aliases
+    - java
+

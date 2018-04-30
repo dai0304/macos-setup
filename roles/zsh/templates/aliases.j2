@@ -1,0 +1,52 @@
+## Alias configuration
+#
+# expand aliases before completing
+#
+setopt complete_aliases # aliased ls needs if file/dir completions work
+
+alias ls='ls -FhG'
+alias ll='ls -lGF'
+alias la="ls -la"
+alias lf="ls -F"
+
+alias where="command -v"
+
+alias less='less -M -R'
+alias su="su -l"
+alias rm='rm -i'
+
+alias du="du -h"
+alias df="df -h"
+
+alias j="jobs -l"
+
+alias diff='colordiff'
+alias date='gdate'
+
+# Git
+alias g='git'
+alias gst='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+
+# Git flow
+alias gff='git flow feature'
+alias gffs='git flow feature start'
+alias gfff='git flow feature finish'
+alias gfr='git flow release'
+alias gfrs='git flow release start'
+alias gfrf='git flow release finish'
+alias gfh='git flow hotfix'
+alias gfhs='git flow hotfix start'
+alias gfhf='git flow hotfix finish'
+alias gfs='git flow support'
+alias gfss='git flow support start'
+
+alias git='hub'
+
+# Finder
+alias findervisible='defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder;'
+alias finderunvisible='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder;'

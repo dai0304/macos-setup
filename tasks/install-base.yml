@@ -29,12 +29,15 @@
       - omnifocus
       - caskroom/versions/omnigraffle6
       - qlmarkdown
+      - qlimagesize
+      - qlcolorcode
       - qlvideo
       - qlstephen
       - qlgradle
       - qlprettypatch
       - quicklook-csv
       - quicklook-json
+      - betterzipql
 
 # [Mac App Store]
 # - LINE
