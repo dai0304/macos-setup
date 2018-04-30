@@ -45,7 +45,7 @@ install_ansible_vault_password() {
 /usr/bin/security find-generic-password -a "$ACCOUNT_NAME" -s "$SERVICE" -w
 EOF
 
-        chmod +x "$VAULT_PASSWORD_FILE"
+        chmod 700 "$VAULT_PASSWORD_FILE"
     fi
 }
 
