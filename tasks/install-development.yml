@@ -10,6 +10,7 @@
     with_items:
       # - homebrew/dupes
       # - homebrew/binary
+      - caskroom/fonts
       - classmethod/repos
 
   - name: Remove homebrew packages
@@ -47,3 +48,4 @@
       - docker
       - mysqlworkbench
       # - intellij-idea
+      - font-hack-nerd-font

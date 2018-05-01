@@ -10,5 +10,6 @@
     - { role: awscli, tags: awscli }
     - { role: anyenv, tags: anyenv }
     - { role: ricty, tags: ricty }
+    - { role: powerline-fonts, tags: powerline-fonts }
 
 - import_playbook: tasks/install-development.yml

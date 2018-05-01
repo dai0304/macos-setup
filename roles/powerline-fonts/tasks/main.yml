@@ -1,0 +1,12 @@
+---
+# file: roles/powerline-fonts/tasks/main.yml
+
+- name: Cloning powerline fonts
+  git:
+    repo: https://github.com/powerline/fonts
+    dest: ~/.config/powerlinefonts
+  register: fontCloned
+
+- name: Install powerline fonts
+  shell: ~/.config/powerlinefonts/install.sh chdir=~/.config/powerlinefonts
+  when: fontCloned|success
