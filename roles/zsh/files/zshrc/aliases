@@ -6,6 +6,7 @@
 # expand aliases before completing
 setopt complete_aliases # aliased ls needs if file/dir completions work
 
+# Baisc
 alias ls='ls -FhG'
 alias ll='ls -lGF'
 alias la="ls -la"
@@ -21,11 +22,13 @@ alias du="du -h"
 alias df="df -h"
 
 alias j="jobs -l"
+alias f="find . -name"
 
 alias diff='colordiff'
 alias date='gdate'
 
 # Git
+alias git='hub'
 alias g='git'
 alias gst='git status'
 alias ga='git add'
@@ -33,6 +36,8 @@ alias gc='git commit'
 alias gl='git pull'
 alias gp='git push'
 alias gd='git diff'
+alias gdca='git diff --cached'
+alias gb='git branch'
 
 # Git flow
 alias gff='git flow feature'
@@ -47,8 +52,17 @@ alias gfhf='git flow hotfix finish'
 alias gfs='git flow support'
 alias gfss='git flow support start'
 
-alias git='hub'
 
 # Finder
 alias findervisible='defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder;'
 alias finderunvisible='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder;'
+
+# Global aliases
+alias -g H="|head"
+alias -g T="|tail"
+alias -g G="|grep"
+alias -g L="|less"
+alias -g JQ="| jq \".\""
+
+# Others
+alias wholediff="diff --new-line-format='+%L' --old-line-format='-%L' --unchanged-line-format=' %L'"

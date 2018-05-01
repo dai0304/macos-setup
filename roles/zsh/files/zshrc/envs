@@ -3,5 +3,7 @@
 ## managed in roles/zsh/files/zshrc/envs
 ##
 
-EDITOR='vi'
-VISUAL='vi'
+export EDITOR='vi'
+export VISUAL='vi'
+
+export REPORTTIME=3

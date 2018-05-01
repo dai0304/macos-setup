@@ -1,18 +1,7 @@
 ###############################################################################
 ## zsh configuration
-## managed in roles/zsh/files/zshrc/00-zsh
+## managed in roles/zsh/files/zshrc/01-zsh
 ##
-
-# set the number of open files to be 1024
-ulimit -S -n 1024
-
-REPORTTIME=3
-
-## Environment variable configuration
-#
-# LANG
-#
-export LANG=ja_JP.UTF-8
 
 ## Default shell configuration
 #
@@ -75,13 +64,11 @@ export HISTCONTROL=ignoreboth
 setopt hist_ignore_dups # ignore duplication command history list
 setopt share_history # share command history data
 
-HISTTIMEFORMAT='%Y/%m/%d %H:%M:%S '
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="yyyy-mm-dd"
-
 ## Completion configuration
 #
 autoload -U compinit
 compinit
+
+## Others
+#
+REPORTTIME=3

@@ -9,5 +9,6 @@
     #- { role: visual_studio_code, tags: visual_studio_code }
     - { role: awscli, tags: awscli }
     - { role: anyenv, tags: anyenv }
+    - { role: ricty, tags: ricty }
 
 - import_playbook: tasks/install-development.yml

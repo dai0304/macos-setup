@@ -1,0 +1,23 @@
+---
+# file: roles/ricty/tasks/main.yml
+
+- name: Update homebrew itself first
+  homebrew: update_homebrew=yes
+
+- name: Tap homebrew repositories
+  homebrew_tap: name={{ item }}
+  with_items:
+    # - homebrew/dupes
+    # - homebrew/binary
+    - sanemat/font
+
+- name: Install Ricty font
+  homebrew:
+    name: ricty
+    install_options: powerline,vim-powerline
+
+- name: Copy font file
+  shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
+  args:
+    creates: ~/Library/Fonts/Ricty-Bold.ttf
+  notify: Run fc-cache

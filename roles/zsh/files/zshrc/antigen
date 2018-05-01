@@ -4,3 +4,4 @@
 ##
 
 source $(brew --prefix)/share/antigen/antigen.zsh
+source $HOME/.antigenrc

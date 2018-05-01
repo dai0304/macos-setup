@@ -48,16 +48,23 @@
   retries: 3
 
 #
-# install antigen and prezto
+# install antigen
 #
 
 - name: Install antigen
   homebrew: name=antigen
 
+- name: Deploy antigenrc template
+  template: src=antigenrc.j2 dest={{ ansible_user_dir }}/.antigenrc force=True
+
+#
+# install prezto
+#
+
 - name: Install prezto through antigen
   shell: >
     source $(brew --prefix)/share/antigen/antigen.zsh && antigen bundle sorin-ionescu/prezto
-    executable={{which_zsh.stdout}}
+    executable={{ which_zsh.stdout }}
 #   ignore_errors: True
 
 - name: Create symlink for prezto
@@ -75,7 +82,7 @@
   command: readlink {{ ansible_user_dir }}/.zpreztorc
   register: zpreztorc_path
 
-- name: Deploy preztorc_template
+- name: Deploy preztorc template
   template: src=zpreztorc.j2 dest={{ zpreztorc_path.stdout }} force=True
 
 #
@@ -91,5 +98,4 @@
   assemble:
     src: "roles/zsh/files/zshrc/"
     dest: "{{ ansible_user_dir }}/.zshrc.local"
-    backup: yes
     delimiter: \n\n

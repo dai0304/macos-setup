@@ -10,7 +10,6 @@
     with_items:
       # - homebrew/dupes
       # - homebrew/binary
-      - sanemat/font
       - classmethod/repos
 
   - name: Remove homebrew packages
@@ -39,19 +38,6 @@
       - giter8
       - httpie
       - rcmdnk/rcmdnkpac/parse-plist
-
-  - name: Install Ricty font
-    homebrew:
-      name: ricty
-      install_options: powerline,vim-powerline
-
-  - name: Copy font file
-    shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
-    args:
-      creates: ~/Library/Fonts/Ricty-Bold.ttf
-
-  - name: Run fc-cache
-    shell: fc-cache -vf
 
   - name: Install Homebrew cask packages
     homebrew_cask: name={{ item }}
