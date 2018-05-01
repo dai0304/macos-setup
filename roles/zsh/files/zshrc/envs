@@ -1,0 +1,7 @@
+###############################################################################
+## Environment variable configuration
+## managed in roles/zsh/files/zshrc/envs
+##
+
+EDITOR='vi'
+VISUAL='vi'

@@ -1,7 +1,9 @@
+###############################################################################
 ## Alias configuration
-#
+## managed in roles/zsh/files/zshrc/aliases
+##
+
 # expand aliases before completing
-#
 setopt complete_aliases # aliased ls needs if file/dir completions work
 
 alias ls='ls -FhG'

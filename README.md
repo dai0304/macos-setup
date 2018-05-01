@@ -11,6 +11,7 @@ https://support.apple.com/ja-jp/HT204012
 ## Run ansible playbook
 
 ```
+$ sudo xcodebuild -license
 $ xcode-select --install
 $ git clone https://github.com/dai0304/macos-setup.git
 $ cd macos-setup

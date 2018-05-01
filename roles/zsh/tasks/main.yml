@@ -68,9 +68,8 @@
 
 - name: Apply prezto setting
   shell: >
-    setopt EXTENDED_GLOB; for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do; ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"; done;
+    setopt EXTENDED_GLOB; for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do; ln -s -f "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"; done;
     executable={{ which_zsh.stdout }}
-  ignore_errors: True
 
 - name: Get path of original preztorc 
   command: readlink {{ ansible_user_dir }}/.zpreztorc
@@ -83,32 +82,14 @@
 # install zshrc
 #
 
-- name: Ensure {{ ansible_user_dir }}/.zsh.d directory exists
-  file:
-    path: "{{ ansible_user_dir }}/.zsh.d"
-    state: directory
-    owner: "{{ ansible_user_id }}"
-    group: staff
-    mode: 0700
-
-- name: Update zshrc for {{ ansible_user_dir }}/.zsh.d
+- name: Update zshrc for {{ ansible_user_dir }}/.zshrc.local
   lineinfile:
     dest: "{{ ansible_user_dir }}/.zshrc"
-    line: for file in ~/.zsh.d/*; do source "$file"; done
+    line: "[ -f ~/.zshrc.local ] && source ~/.zshrc.local"
 
-- name: Deploy {{ ansible_user_dir }}/zsh.d
-  template:
-    src: "{{ item }}.j2"
-    dest: "{{ ansible_user_dir }}/.zsh.d/{{ item }}"
-    force: True
-  with_items:
-    - zsh
-    - env
-    - terminal
-    - prompt
-    - homebrew
-    - antigen
-    - anyenv
-    - aliases
-    - java
-
+- name: Assemble {{ ansible_user_dir }}/.zshrc.local
+  assemble:
+    src: "roles/zsh/files/zshrc/"
+    dest: "{{ ansible_user_dir }}/.zshrc.local"
+    backup: yes
+    delimiter: \n\n

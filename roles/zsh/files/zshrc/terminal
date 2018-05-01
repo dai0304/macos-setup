@@ -1,5 +1,8 @@
-## terminal configuration
-#
+###############################################################################
+## Terminal configuration
+## managed in roles/zsh/files/zshrc/terminal
+##
+
 unset LSCOLORS
 case "${TERM}" in
   xterm)

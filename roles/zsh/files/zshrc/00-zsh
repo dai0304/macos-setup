@@ -1,3 +1,8 @@
+###############################################################################
+## zsh configuration
+## managed in roles/zsh/files/zshrc/00-zsh
+##
+
 # set the number of open files to be 1024
 ulimit -S -n 1024
 
@@ -80,4 +85,3 @@ HIST_STAMPS="yyyy-mm-dd"
 #
 autoload -U compinit
 compinit
-

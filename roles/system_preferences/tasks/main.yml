@@ -311,3 +311,10 @@
     key: ShowPercent
     type: string
     value: "YES"
+
+- name: "Function keys"
+  osx_defaults:
+    domain: Apple Global Domain
+    key: com.apple.keyboard.fnState
+    type: bool
+    value: true
