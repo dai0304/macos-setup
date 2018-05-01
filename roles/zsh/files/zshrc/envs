@@ -6,4 +6,3 @@
 export EDITOR='vi'
 export VISUAL='vi'
 
-export REPORTTIME=3
