@@ -16,12 +16,13 @@ alias where="command -v"
 
 alias less='less -M -R'
 alias su="su -l"
-alias rm='rm -i'
+alias rm='rm -i --preserve-root'
 
 alias du="du -h"
 alias df="df -h"
 
 alias j="jobs -l"
+alias h="history"
 alias f="find . -name"
 
 alias diff='colordiff'
