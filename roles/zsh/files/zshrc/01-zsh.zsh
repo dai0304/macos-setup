@@ -34,10 +34,6 @@ setopt noautoremoveslash
 #
 setopt nolistbeep
 
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-
 ## Keybind configuration
 #
 # emacs like keybind (e.x. Ctrl-a goes to head of a line and Ctrl-e goes
@@ -57,17 +53,21 @@ bindkey "\\en" history-beginning-search-forward-end
 
 ## Command history configuration
 #
+setopt extended_history
+setopt hist_ignore_dups      # ignore if they are duplicates of the previous event
+setopt hist_ignore_all_dups  # remove duplicates an older one
+setopt hist_ignore_space     # ignore command starts with SP
+
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 export HISTCONTROL=ignoreboth
 setopt hist_ignore_dups # ignore duplication command history list
-setopt share_history # share command history data
+setopt share_history # share command history data with tabs
 
 ## Completion configuration
 #
-autoload -U compinit
-compinit
+autoload -U compinit; compinit
 
 ## Others
 #
