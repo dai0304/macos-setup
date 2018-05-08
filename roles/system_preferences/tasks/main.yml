@@ -318,3 +318,24 @@
     key: com.apple.keyboard.fnState
     type: bool
     value: true
+
+- name: "Menu bar clock 1"
+  osx_defaults:
+    domain: com.apple.menuextra.clock
+    key: DateFormat
+    type: string
+    value: "M/d(EEE) H:mm"
+
+- name: "Menu bar clock 2"
+  osx_defaults:
+    domain: com.apple.menuextra.clock
+    key: FlashDateSeparators
+    type: bool
+    value: false
+
+- name: "Menu bar clock 3"
+  osx_defaults:
+    domain: com.apple.menuextra.clock
+    key: IsAnalog
+    type: bool
+    value: false
