@@ -5,6 +5,11 @@
   - name: Update homebrew itself first
     homebrew: update_homebrew=yes
 
+  - name: Remove homebrew cask packages
+    homebrew: name={{ item }} state=absent
+    with_items:
+      - clipy
+ 
   - name: Install Homebrew cask packages
     homebrew_cask: name={{ item }}
     with_items:
@@ -12,7 +17,6 @@
       - google-japanese-ime
       - firefox
       - adobe-acrobat-reader
-      # - clipy
       - macdown
       # - bitbar
       # - karabiner
@@ -39,6 +43,9 @@
       - quicklook-json
       - betterzipql
       - inkdrop
+      - lightpaper
+      - typora
+      - appcleaner
 
 # [Mac App Store]
 # - LINE

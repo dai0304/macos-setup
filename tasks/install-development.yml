@@ -27,7 +27,7 @@
       - colordiff
       - coreutils # for gdate
       - jq
-      - pt
+      - the_platinum_searcher
       - git-flow-avh
       - git-secrets
       - hub
