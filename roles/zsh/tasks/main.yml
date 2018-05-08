@@ -11,6 +11,7 @@
   command: which zsh
   register: which_zsh
   ignore_errors: True
+  changed_when: false
 
 - debug: msg="{{ which_zsh.stdout }}"
 
@@ -23,6 +24,7 @@
     grep "^{{ which_zsh.stdout }}$" /etc/shells
   register: grep_shells 
   ignore_errors: True
+  changed_when: false
 
 - debug: msg="{{ grep_shells }}"
   when: grep_shells.rc == 0
@@ -34,18 +36,18 @@
   when: grep_shells.rc != 0
 
 
-- name: Check current login shell
-  shell: dscl . read ~ UserShell | awk '{print $2}'
-  register: osx_login_shell_current_login_shell
-  changed_when: false
+# - name: Check current login shell
+#   shell: dscl . read ~ UserShell | awk '{print $2}'
+#   register: osx_login_shell_current_login_shell
+#   changed_when: false
 
-- name: Change login shell
-  shell: >
-    chpass -s {{ which_zsh.stdout }}
-  when: osx_login_shell_current_login_shell.stdout != osx_login_shell_shell
-  register: result
-  until: result.rc == 0
-  retries: 3
+# - name: Change login shell
+#   shell: >
+#     chpass -s {{ which_zsh.stdout }}
+#   when: osx_login_shell_current_login_shell.stdout != which_zsh.stdout
+#   register: result
+#   until: result.rc == 0
+#   retries: 3
 
 #
 # install antigen
@@ -62,10 +64,10 @@
 #
 
 - name: Install prezto through antigen
-  shell: >
-    source $(brew --prefix)/share/antigen/antigen.zsh && antigen bundle sorin-ionescu/prezto
-    executable={{ which_zsh.stdout }}
-#   ignore_errors: True
+  shell: source $(brew --prefix)/share/antigen/antigen.zsh && antigen bundle sorin-ionescu/prezto
+  args:
+    executable: "{{ which_zsh.stdout }}"
+    creates: "{{ ansible_env.HOME }}/.antigen/bundles/sorin-ionescu/prezto"
 
 - name: Create symlink for prezto
   file:
@@ -74,13 +76,14 @@
     state: link
 
 - name: Apply prezto setting
-  shell: >
-    setopt EXTENDED_GLOB; for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do; ln -s -f "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"; done;
-    executable={{ which_zsh.stdout }}
+  shell: setopt EXTENDED_GLOB; for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do; ln -s -f "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"; done;
+  args:
+    executable: "{{ which_zsh.stdout }}"
 
 - name: Get path of original preztorc 
   command: readlink {{ ansible_user_dir }}/.zpreztorc
   register: zpreztorc_path
+  changed_when: false
 
 - name: Deploy preztorc template
   template: src=zpreztorc.j2 dest={{ zpreztorc_path.stdout }} force=True
