@@ -34,18 +34,18 @@
   become: true
   become_user: root
 
-- name: Check current login shell
-  shell: dscl . read ~ UserShell | awk '{print $2}'
-  register: osx_login_shell_current_login_shell
-  changed_when: false
+# - name: Check current login shell
+#   shell: dscl . read ~ UserShell | awk '{print $2}'
+#   register: osx_login_shell_current_login_shell
+#   changed_when: false
 
-- name: Change login shell
-  shell: >
-    chpass -s {{ which_fish.stdout }}
-  when: osx_login_shell_current_login_shell.stdout != which_fish.stdout
-  register: result
-  until: result.rc == 0
-  retries: 3
+# - name: Change login shell
+#   shell: >
+#     chpass -s {{ which_fish.stdout }}
+#   when: osx_login_shell_current_login_shell.stdout != which_fish.stdout
+#   register: result
+#   until: result.rc == 0
+#   retries: 3
 
 #
 # install fisher plugins

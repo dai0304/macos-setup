@@ -33,12 +33,12 @@
     value: 5
     state: present
 
-- name: Turn on application level firewall and block all incoming connections
+- name: Disable application level firewall
   osx_defaults:
     domain: /Library/Preferences/com.apple.alf
     key: globalstate
     type: int
-    value: 2
+    value: 0
     state: present
   become: true
 

@@ -3,13 +3,20 @@ function fish_user_key_bindings
   bind \c] peco_select_ghq_repository  # 追加
 end
 
-balias gst "git status"
-balias gd "git diff"
+set -g theme_nerd_fonts yes
+
+###############################################################################
+# iTerm2
+
+test -e ~/.iterm2_shell_integration.fish; and source ~/.iterm2_shell_integration.fish
+
+###############################################################################
+# aliases
 
 balias where "command -v"
+balias ltp "open -a lightpaper"
 
 balias rm "rm -i"
-
 balias du "du -h"
 balias df "df -h"
 
@@ -18,16 +25,22 @@ balias diff colordiff
 balias date gdate
 
 # Git
-balias git hub
 balias g git
-balias gst 'git status'
-balias ga 'git add'
-balias gc 'git commit'
-balias gl 'git pull'
-balias gp 'git push'
-balias gd 'git diff'
-balias gdca 'git diff --cached'
-balias gb 'git branch'
+balias gst "git status"
+balias ga "git add"
+balias gc "git commit"
+balias gl "git pull"
+balias glog "git log --decorate --graph --all --oneline"
+balias gp "git push"
+balias gpf "git push --force-with-lease"
+balias gd "git diff"
+balias gdca "git diff --cached"
+balias gb "git branch"
+
+balias git-sweep   'git branch --merged | grep -vE \'^\*|master|develop\' | xargs -I % git branch -d %'
+balias git-develop 'git co develop; and git pull; and git remote prune origin; and git-sweep; and git branch'
+balias git-master  'git co master;  and git pull; and git remote prune origin; and git-sweep; and git branch'
+balias git-rebase-push 'git pull --rebase origin develop; and git push --force-with-lease'
 
 # Git flow
 balias gff  'git flow feature'
@@ -42,7 +55,9 @@ balias gfhf 'git flow hotfix finish'
 balias gfs  'git flow support'
 balias gfss 'git flow support start'
 
+# Hub
+balias git hub
 
 # Finder
-balias findervisible 'defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder;'
-balias finderunvisible 'defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder;'
+balias findervisible 'defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder'
+balias finderunvisible 'defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'
