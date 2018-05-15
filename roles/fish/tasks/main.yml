@@ -13,6 +13,7 @@
     - peco
     - ghq
     - fisherman
+    - fzf
 
 - name: Search path of fish
   command: which fish
@@ -51,20 +52,29 @@
 # install fisher plugins
 #
 
-- name: Installing fish plugins
+- name: Uninstall fish plugins
+  shell: fisher rm {{ item.name | default(item) }}
+  args:
+    executable: "{{ which_fish.stdout }}"
+    removes: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.creates | default(item) }}"
+  with_items:
+    - { name: omf/theme-bobthefish, creates: bobthefish }
+    - { name: hauleth/agnoster, creates: agnoster }
+    - { name: oh-my-fish/plugin-peco, creates: peco }
+
+- name: Install fish plugins
   shell: fisher {{ item.name | default(item) }}
   args:
     executable: "{{ which_fish.stdout }}"
     creates: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.creates | default(item) }}"
   with_items:
     - { name: omf/theme-bobthefish, creates: bobthefish }
-    # - { name: hauleth/agnoster, creates: xxx }
     - { name: 0rax/fish-bd, creates: bd }
-    - { name: oh-my-fish/plugin-peco, creates: peco }
     - { name: oh-my-fish/plugin-balias, creates: balias }
     - { name: yoshiori/fish-peco_select_ghq_repository, creates: peco_select_ghq_repository }
-    # - fzf
+    - fzf
     - z
+    - spin
 
 - name: Install config in global fish configuration
   copy:
