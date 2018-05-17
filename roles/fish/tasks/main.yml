@@ -6,7 +6,12 @@
   with_items:
     - fisherman/tap
 
-- name: Install fish
+  - name: Remove homebrew packages
+    homebrew: name={{ item }} state=absent
+    with_items:
+    - thefuck
+ 
+- name: Install homebrew packages
   homebrew: name={{ item }}
   with_items:
     - fish

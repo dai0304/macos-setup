@@ -1,4 +1,7 @@
 set -g theme_nerd_fonts yes
+set -g theme_date_format "+%Y/%m/%d %a %H:%M:%S"
+
+export LSCOLORS=gxfxcxdxbxegedabagacad
 
 ###############################################################################
 # iTerm2
