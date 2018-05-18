@@ -6,10 +6,10 @@
   with_items:
     - fisherman/tap
 
-  - name: Remove homebrew packages
-    homebrew: name={{ item }} state=absent
-    with_items:
-    - thefuck
+- name: Uninstall homebrew packages
+  homebrew: name={{ item }} state=absent
+  with_items:
+  - thefuck
  
 - name: Install homebrew packages
   homebrew: name={{ item }}
@@ -61,22 +61,25 @@
   shell: fisher rm {{ item.name | default(item) }}
   args:
     executable: "{{ which_fish.stdout }}"
-    removes: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.creates | default(item) }}"
+    removes: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.dir | default(item) }}"
   with_items:
-    - { name: omf/theme-bobthefish, creates: bobthefish }
-    - { name: hauleth/agnoster, creates: agnoster }
-    - { name: oh-my-fish/plugin-peco, creates: peco }
+    - { name: omf/theme-bobthefish, dir: bobthefish }
+    - { name: hauleth/agnoster, dir: agnoster }
+    - { name: oh-my-fish/plugin-peco, dir: peco }
+    - { name: omf/thefuck, dir: thefuck }
 
 - name: Install fish plugins
   shell: fisher {{ item.name | default(item) }}
   args:
     executable: "{{ which_fish.stdout }}"
-    creates: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.creates | default(item) }}"
+    creates: "{{ ansible_env.HOME }}/.config/fisherman/{{ item.dir | default(item) }}"
   with_items:
-    - { name: omf/theme-bobthefish, creates: bobthefish }
-    - { name: 0rax/fish-bd, creates: bd }
-    - { name: oh-my-fish/plugin-balias, creates: balias }
-    - { name: yoshiori/fish-peco_select_ghq_repository, creates: peco_select_ghq_repository }
+    - { name: omf/theme-bobthefish, dir: bobthefish }
+    - { name: 0rax/fish-bd, dir: bd }
+    - { name: oh-my-fish/plugin-balias, dir: balias }
+    - { name: yoshiori/fish-peco_select_ghq_repository, dir: peco_select_ghq_repository }
+    - { name: douglarek/jenv, dir: jenv }
+    - { name: decors/fish-ghq, dir: ghq }
     - fzf
     - z
     - spin
@@ -85,3 +88,8 @@
   copy:
     src: config.fish
     dest: "{{ ansible_user_dir }}/.config/fish/config.fish"
+
+- name: Install ghq-new function
+  copy:
+    src: ghq-new.fish
+    dest: "{{ ansible_user_dir }}/.config/fish/functions/ghq-new.fish"

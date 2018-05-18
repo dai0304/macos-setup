@@ -8,7 +8,6 @@
     - { role: git, tags: git }
     #- { role: visual_studio_code, tags: visual_studio_code }
     - { role: awscli, tags: awscli }
-    - { role: anyenv, tags: anyenv }
     - { role: ricty, tags: ricty }
     - { role: powerline-fonts, tags: powerline-fonts }
 

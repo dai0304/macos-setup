@@ -193,7 +193,7 @@
     key: "{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-    - { key: name, value: screenshot }
+    - { key: name, value: '' }
     - { key: location, value: "~/Dropbox/Private/screenshots" }
 
 ###############################################################################

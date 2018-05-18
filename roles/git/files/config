@@ -2,6 +2,8 @@
   name = Daisuke Miyamoto
   email = dai.0304@gmail.com
   signingkey = 8843A086A99C8EBA
+[github]
+  user = dai0304
 [color]
   # colorの設定 (以下のコマンドは自動で色つける)
   ui = auto
