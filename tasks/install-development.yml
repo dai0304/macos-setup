@@ -8,9 +8,7 @@
   - name: Tap homebrew repositories
     homebrew_tap: name={{ item }}
     with_items:
-      # - homebrew/dupes
-      # - homebrew/binary
-      - caskroom/fonts
+      - homebrew/cask-fonts
       - classmethod/repos
 
   - name: Remove homebrew packages

@@ -1,0 +1,26 @@
+---
+# file: roles/java/tasks/main.yml
+
+- name: Tap homebrew repositories
+  homebrew_tap: name={{ item }}
+  with_items:
+    - homebrew/cask-versions
+
+- name: Install jenv
+  homebrew: name={{ item }}
+  with_items:
+    - jenv
+
+- name: Install Java
+  homebrew_cask: name={{ item }}
+  with_items:
+    - java # java10
+    - java8
+
+- name: Add Java to jenv
+  shell: eval "$(jenv init -)" && jenv add `/usr/libexec/java_home -v {{ item }}`
+  args:
+    creates: "{{ ansible_env.HOME }}/.jenv/versions/{{ item }}"
+  with_items:
+    - 1.8
+    - 10.0

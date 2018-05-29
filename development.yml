@@ -9,6 +9,7 @@
     #- { role: visual_studio_code, tags: visual_studio_code }
     - { role: awscli, tags: awscli }
     - { role: ricty, tags: ricty }
-    - { role: powerline-fonts, tags: powerline-fonts }
+    #- { role: powerline-fonts, tags: powerline-fonts }
+    - { role: java, tags: java }
 
 - import_playbook: tasks/install-development.yml
