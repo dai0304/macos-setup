@@ -86,10 +86,5 @@
 
 - name: Install config in global fish configuration
   copy:
-    src: config.fish
-    dest: "{{ ansible_user_dir }}/.config/fish/config.fish"
-
-- name: Install ghq-new function
-  copy:
-    src: ghq-new.fish
-    dest: "{{ ansible_user_dir }}/.config/fish/functions/ghq-new.fish"
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.config/fish/"

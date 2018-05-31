@@ -42,6 +42,8 @@ $ ansible-playbook -K site.yml
 * Chatwork <- (login)
 * OmniFocus <- (license, login, sync)
 * OmniGraffle <- license
+* configure ssh agent
+* fish https://blog.nijohando.jp/post/ghq-fish-hub/
 
 ## Manual setup
 
