@@ -11,5 +11,6 @@
     - { role: ricty, tags: ricty }
     #- { role: powerline-fonts, tags: powerline-fonts }
     - { role: java, tags: java }
+    - { role: docker, tags: docker }
 
 - import_playbook: tasks/install-development.yml

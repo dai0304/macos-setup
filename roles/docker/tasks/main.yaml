@@ -1,0 +1,12 @@
+---
+# file: roles/docker/tasks/main.yml
+
+- name: Install Homebrew packages - docker
+  homebrew: name={{ item }}
+  with_items:
+    - docker
+
+- name: Install Homebrew cask packages - docker
+  homebrew_cask: name={{ item }}
+  with_items:
+    - docker
