@@ -1,0 +1,9 @@
+---
+# file: roles/golang/tasks/main.yml
+
+- name: Install golang
+  homebrew: name={{ item }}
+  with_items:
+    - go
+    - dep
+    - gox

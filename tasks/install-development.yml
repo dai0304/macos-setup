@@ -14,7 +14,7 @@
   - name: Remove homebrew packages
     homebrew: name={{ item }} state=absent
     with_items:
-      - git-flow
+      - rcmdnk/rcmdnkpac/parse-plist
  
   - name: Install homebrew packages
     homebrew: name={{ item }}
@@ -26,9 +26,6 @@
       - coreutils # for gdate
       - jq
       - the_platinum_searcher
-      - git-flow-avh
-      - git-secrets
-      - hub
       - mysql
       - nkf
       - watch
@@ -36,13 +33,12 @@
       - base64
       - giter8
       - httpie
-      - rcmdnk/rcmdnkpac/parse-plist
 
   - name: Install Homebrew cask packages
     homebrew_cask: name={{ item }}
     with_items:
       - iterm2
-      # - virtualbox
       - mysqlworkbench
-      # - intellij-idea
       - font-hack-nerd-font
+      # - virtualbox
+      # - intellij-idea

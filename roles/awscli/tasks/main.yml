@@ -1,10 +1,16 @@
 ---
 # file: roles/awscli/tasks/main.yml
 
-- name: Install AWS CLI
-  homebrew:
-    name: awscli
-    state: present
+- name: Tap homebrew repositories
+  homebrew_tap: name={{ item }}
+  with_items:
+    - youyo/awslogin
+
+- name: Install homebrew packages
+  homebrew: name={{ item }}
+  with_items:
+    - awscli
+    - awslogin
 
 - name: Ensure {{ ansible_user_dir }}/.aws directory exists
   file:

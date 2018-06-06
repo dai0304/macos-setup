@@ -1,8 +1,24 @@
 ---
-# file: roles/github/tasks/main.yml
+# file: roles/git/tasks/main.yml
 
-- name: Install git
-  homebrew: name=git
+- name: Tap homebrew repositories
+  homebrew_tap: name={{ item }}
+  with_items:
+    - kyoshidajp/tosa
+
+- name: Remove homebrew packages
+  homebrew: name={{ item }} state=absent
+  with_items:
+    - git-flow
+
+- name: Install homebrew packages - git
+  homebrew: name={{ item }}
+  with_items:
+    - git
+    - hub
+    - git-flow-avh
+    - git-secrets
+    - tosa
 
 - name: Ensure .config/git directory exists
   file:
