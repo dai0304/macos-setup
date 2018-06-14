@@ -1,0 +1,29 @@
+---
+# file: roles/node/tasks/main.yml
+
+- name: Install nodejs
+  homebrew: name={{ item }}
+  with_items:
+    - ndenv
+    - node-build
+
+- name: Search path of ndenv
+  command: ndenv root
+  register: which_ndenv
+  ignore_errors: True
+  changed_when: false
+
+- name: Create dir for plugins
+  file:
+    path: "{{ which_ndenv.stdout }}/plugins"
+    state: directory
+
+- name: Install node-build
+  git:
+    repo: "https://github.com/riywo/node-build.git"
+    dest: "{{ which_ndenv.stdout }}/plugins/node-build"
+
+- name: Install config in global fish configuration
+  copy:
+    src: "{{ role_path }}/files/fishconf.d/"
+    dest: "{{ ansible_user_dir }}/.config/fish/conf.d/"

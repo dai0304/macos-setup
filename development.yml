@@ -11,6 +11,8 @@
     - { role: ricty, tags: ricty }
     #- { role: powerline-fonts, tags: powerline-fonts }
     - { role: java, tags: java }
+    - { role: golang, tags: golang }
+    - { role: node, tags: node }
     - { role: docker, tags: docker }
     - { role: mas, tags: mas }
 
