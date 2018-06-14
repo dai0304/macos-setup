@@ -1,0 +1,16 @@
+---
+# file: roles/apex/tasks/main.yml
+
+- name: Check whether apex is already installed
+  shell: which apex
+  register: which_apex
+  failed_when: False
+
+
+- name: Download apex installer
+  get_url: url=https://raw.githubusercontent.com/apex/apex/master/install.sh dest=/tmp/apex-installer.sh
+  when: which_apex.rc != 0
+
+- name: Execute the apex-installer.sh
+  shell: /bin/sh /tmp/apex-installer.sh
+  when: which_apex.rc != 0

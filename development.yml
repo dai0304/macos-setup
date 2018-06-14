@@ -14,6 +14,6 @@
     - { role: golang, tags: golang }
     - { role: node, tags: node }
     - { role: docker, tags: docker }
-    - { role: mas, tags: mas }
+    - { role: apex, tags: apex }
 
 - import_playbook: tasks/install-development.yml
