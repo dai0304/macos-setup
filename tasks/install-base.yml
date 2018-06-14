@@ -9,7 +9,7 @@
     homebrew: name={{ item }} state=absent
     with_items:
       - clipy
- 
+
   - name: Install Homebrew cask packages
     homebrew_cask: name={{ item }}
     with_items:
@@ -46,10 +46,3 @@
       - lightpaper
       - typora
       - appcleaner
-
-# [Mac App Store]
-# - LINE
-# - Microsoft Remote Desktop
-# - SonicWALL Mobile Connect
-# - Tweetbot
-# - TweetDeck by Twitter

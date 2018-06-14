@@ -12,5 +12,6 @@
     #- { role: powerline-fonts, tags: powerline-fonts }
     - { role: java, tags: java }
     - { role: docker, tags: docker }
+    - { role: mas, tags: mas }
 
 - import_playbook: tasks/install-development.yml
