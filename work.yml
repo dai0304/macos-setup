@@ -1,0 +1,21 @@
+---
+
+- name: Provision macOS applications used for work
+  hosts: localhost
+
+  tasks:
+    - name: Install homebrew packages - mas
+      homebrew: name=mas
+
+    - name: MAS | get installed list
+      shell: mas list
+      register: mas_installed_list
+      changed_when: False
+      check_mode: no
+
+    - name: MAS | install items
+      shell: "mas install {{ item.id }}"
+      when: 'item.id|string not in mas_installed_list.stdout'
+      with_items:
+        - { id: 715768417, name: Microsoft Remote Desktop 8.0 }
+        # - { id: 1295203466, name: Microsoft Remote Desktop 10 }

@@ -4,16 +4,43 @@
   hosts: localhost
 
   roles:
-    - { role: ssh, tags: ssh }
-    - { role: git, tags: git }
-    #- { role: visual_studio_code, tags: visual_studio_code }
     - { role: awscli, tags: awscli }
-    - { role: ricty, tags: ricty }
-    #- { role: powerline-fonts, tags: powerline-fonts }
     - { role: java, tags: java }
+    - { role: clang, tags: clang }
     - { role: golang, tags: golang }
     - { role: node, tags: node }
     - { role: docker, tags: docker }
     - { role: apex, tags: apex }
+    #- { role: visual_studio_code, tags: visual_studio_code }
+    #- { role: powerline-fonts, tags: powerline-fonts }
 
-- import_playbook: tasks/install-development.yml
+  tasks:
+    - name: Update homebrew itself first
+      homebrew: update_homebrew=yes
+
+    - name: Tap homebrew repositories
+      homebrew_tap: name={{ item }}
+      with_items:
+        - classmethod/repos
+
+    - name: Remove homebrew packages
+      homebrew: name={{ item }} state=absent
+      with_items:
+        - rcmdnk/rcmdnkpac/parse-plist
+   
+    - name: Install homebrew packages
+      homebrew: name={{ item }}
+      with_items:
+        - mysql
+        - aurl
+        - giter8
+        - httpie
+
+    - name: Install Homebrew cask packages
+      homebrew_cask: name={{ item }}
+      with_items:
+        - mysqlworkbench
+        - macdown
+        - chatwork
+        # - virtualbox
+        # - intellij-idea

@@ -1,0 +1,20 @@
+---
+
+- name: Provision macOS applications used for home
+  hosts: localhost
+
+  tasks:
+    - name: Install homebrew packages - mas
+      homebrew: name=mas
+
+    - name: MAS | get installed list
+      shell: mas list
+      register: mas_installed_list
+      changed_when: False
+      check_mode: no
+
+    - name: MAS | install items
+      shell: "mas install {{ item.id }}"
+      when: 'item.id|string not in mas_installed_list.stdout'
+      with_items:
+        - { id: 539883307, name: LINE }
