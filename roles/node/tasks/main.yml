@@ -23,6 +23,11 @@
     repo: "https://github.com/riywo/node-build.git"
     dest: "{{ which_ndenv.stdout }}/plugins/node-build"
 
+- name: Install ndenv-yarn-install
+  git:
+    repo: "https://github.com/pine/ndenv-yarn-install.git"
+    dest: "{{ which_ndenv.stdout }}/plugins/ndenv-yarn-install"
+
 - name: Install config in global fish configuration
   copy:
     src: "{{ role_path }}/files/fishconf.d/"

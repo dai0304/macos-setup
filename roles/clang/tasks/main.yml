@@ -1,0 +1,14 @@
+---
+# file: roles/clang/tasks/main.yml
+
+- name: Install Homebrew packages - clang
+  homebrew: name={{ item }}
+  with_items:
+    - cmake
+    - autoconf
+    - bison
+
+- name: Install config in global fish configuration
+  copy:
+    src: "{{ role_path }}/files/fishconf.d/"
+    dest: "{{ ansible_user_dir }}/.config/fish/conf.d/"
