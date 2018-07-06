@@ -9,6 +9,7 @@
     - { role: clang, tags: clang }
     - { role: golang, tags: golang }
     - { role: node, tags: node }
+    - { role: python, tags: python }
     - { role: docker, tags: docker }
     - { role: apex, tags: apex }
     #- { role: visual_studio_code, tags: visual_studio_code }

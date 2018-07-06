@@ -17,6 +17,7 @@
     - java # java10
     - java8
     - maven
+    - gradle
 
 - name: Add Java to jenv
   shell: eval "$(jenv init -)" && jenv add `/usr/libexec/java_home -v {{ item }}`

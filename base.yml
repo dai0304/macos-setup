@@ -33,6 +33,8 @@
         - nkf
         - watch
         - base64
+        - ffmpeg
+        - telnet
 
     - name: Remove homebrew cask packages
       homebrew_cask: name={{ item }} state=absent
