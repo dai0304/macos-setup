@@ -12,6 +12,7 @@
     - { role: python, tags: python }
     - { role: docker, tags: docker }
     - { role: apex, tags: apex }
+    - { role: gstreamer, tags: gstreamer }
     #- { role: visual_studio_code, tags: visual_studio_code }
     #- { role: powerline-fonts, tags: powerline-fonts }
 

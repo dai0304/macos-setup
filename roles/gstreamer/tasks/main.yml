@@ -1,0 +1,11 @@
+---
+# file: roles/gstreamer/tasks/main.yml
+
+- name: Install gstreamer
+  homebrew: name={{ item }}
+  with_items:
+    - gstreamer
+    - gst-plugins-base
+    - gst-plugins-good
+    - gst-plugins-bad
+    - gst-plugins-ugly
