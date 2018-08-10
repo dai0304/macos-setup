@@ -1,0 +1,8 @@
+---
+# file: roles/virtualbox/tasks/main.yml
+
+- name: Install VirtualBox
+  homebrew_cask: name={{ item }}
+  with_items:
+    - virtualbox
+    - virtualbox-extension-pack

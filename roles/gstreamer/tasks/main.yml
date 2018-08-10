@@ -9,3 +9,5 @@
     - gst-plugins-good
     - gst-plugins-bad
     - gst-plugins-ugly
+    # - gst-ffmpeg # not found 2018-08-10
+    - gst-libav

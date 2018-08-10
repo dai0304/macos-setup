@@ -13,6 +13,7 @@
     - { role: docker, tags: docker }
     - { role: apex, tags: apex }
     - { role: gstreamer, tags: gstreamer }
+    - { role: virtualbox, tags: virtualbox }
     #- { role: visual_studio_code, tags: visual_studio_code }
     #- { role: powerline-fonts, tags: powerline-fonts }
 
