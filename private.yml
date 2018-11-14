@@ -4,8 +4,15 @@
   hosts: localhost
 
   tasks:
-    - name: Install homebrew packages - mas
-      homebrew: name=mas
+    - name: Install homebrew packages
+      homebrew: name={{ item }}
+      with_items:
+        - mas
+
+    - name: Install Homebrew cask packages
+      homebrew_cask: name={{ item }}
+      with_items:
+        - iexplorer
 
     - name: MAS | get installed list
       shell: mas list

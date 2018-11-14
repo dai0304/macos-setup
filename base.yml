@@ -78,6 +78,7 @@
         - iterm2
         - font-hack-nerd-font
         - google-drive-file-stream
+        - typora
 
     - name: Install homebrew packages - mas
       homebrew: name=mas

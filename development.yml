@@ -38,6 +38,7 @@
         - aurl
         - giter8
         - httpie
+        - kotlin
 
     - name: Install Homebrew cask packages
       homebrew_cask: name={{ item }}
