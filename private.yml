@@ -14,6 +14,11 @@
       with_items:
         - iexplorer
 
+    - name: Install Homebrew cask packages
+      homebrew_cask: name={{ item }}
+      with_items:
+        - dropbox
+
     - name: MAS | get installed list
       shell: mas list
       register: mas_installed_list

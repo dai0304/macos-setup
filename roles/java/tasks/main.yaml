@@ -5,6 +5,7 @@
   homebrew_tap: name={{ item }}
   with_items:
     - homebrew/cask-versions
+    - caskroom/versions
 
 - name: Install jenv
   homebrew: name={{ item }}
@@ -16,6 +17,7 @@
   with_items:
     - java # java10
     - java8
+    - caskroom/versions/zulu7
     - maven
     - gradle
 

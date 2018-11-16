@@ -52,7 +52,6 @@
         # - bitbar
         # - karabiner
         # - karabiner-elements
-        - dropbox
         - slack
         # - evernote
         - skitch
@@ -74,11 +73,10 @@
         - betterzipql
         # - inkdrop
         # - lightpaper
-        # - typora
+        - typora
         - iterm2
         - font-hack-nerd-font
         - google-drive-file-stream
-        - typora
 
     - name: Install homebrew packages - mas
       homebrew: name=mas
