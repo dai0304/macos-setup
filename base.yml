@@ -77,6 +77,8 @@
         - iterm2
         - font-hack-nerd-font
         - google-drive-file-stream
+        - kindle
+        - kindlegen
 
     - name: Install homebrew packages - mas
       homebrew: name=mas
