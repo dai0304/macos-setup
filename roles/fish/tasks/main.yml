@@ -1,11 +1,6 @@
 ---
 # file: roles/fish/tasks/main.yml
 
-- name: Tap homebrew repositories for fisherman
-  homebrew_tap: name={{ item }}
-  with_items:
-    - fisherman/tap
-
 - name: Uninstall homebrew packages
   homebrew: name={{ item }} state=absent
   with_items:
