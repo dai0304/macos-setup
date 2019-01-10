@@ -70,6 +70,7 @@
         - qlprettypatch
         - quicklook-csv
         - quicklook-json
+        - station
         - betterzipql
         # - inkdrop
         # - lightpaper
